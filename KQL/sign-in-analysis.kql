@@ -1,0 +1,14 @@
+// Microsoft Sentinel - Sign-In Analysis
+// Provides a summary of authentication activity
+// for the lab account.
+
+SigninLogs
+| where UserPrincipalName =~ "sentinellabuser@travaughnwatson2gmail.onmicrosoft.com"
+| summarize
+    TotalAttempts = count(),
+    FailedAttempts = countif(ResultType != 0),
+    SuccessfulAttempts = countif(ResultType == 0),
+    FirstSeen = min(TimeGenerated),
+    LastSeen = max(TimeGenerated)
+    by UserPrincipalName, IPAddress
+| order by LastSeen desc
