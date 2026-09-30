@@ -149,25 +149,41 @@ Additional queries will be added as the investigation progresses.
 
 ## Detection Rule
 
-The `Detection-Rules/` directory contains documentation for the Microsoft Sentinel analytics rule created during the lab.
+A Microsoft Sentinel Analytics Rule was created to detect repeated failed Microsoft Entra ID authentication attempts.
 
-The rule will be designed to identify suspicious authentication behavior and generate a Sentinel incident for investigation.
+The rule:
+
+- Uses the `SigninLogs` table
+- Identifies failed authentication events with ResultType `50126`
+- Groups activity by user and source IP address
+- Triggers when five or more failed attempts are detected
+- Runs every 5 minutes
+- Looks back over the previous 10 minutes
+- Maps the affected user and source IP as incident entities
+- Generates a Sentinel incident for investigation
+
+The detection was successfully validated by generating five failed authentication attempts against the lab account.
 
 ---
 
 ## Incident Investigation
 
-The `Incident-Response/` directory contains the investigation documentation, including:
+The generated Microsoft Sentinel incident was investigated using the incident overview, entities, investigation graph, and authentication data.
 
-* Incident summary
-* Detection source
-* Affected entities
-* Timeline
-* Indicators of compromise
-* Investigation findings
-* MITRE ATT&CK mapping
-* Recommended response actions
-* Lessons learned
+The investigation included:
+
+- Identification of the affected user
+- Identification of the source IP address
+- Review of failed authentication activity
+- Review of successful authentication activity
+- Authentication timeline analysis
+- Review of related authentication result codes
+- Entity correlation within Microsoft Sentinel
+- Assessment of whether the activity represented a potential compromise
+
+The Sentinel investigation graph successfully correlated the affected user and source IP with the generated incident.
+
+The activity was intentionally generated as part of the lab validation process and was therefore determined to be simulated security activity rather than an actual compromise.
 
 ---
 
@@ -192,15 +208,31 @@ Sensitive information such as credentials, tokens, tenant identifiers, and other
 
 ## MITRE ATT&CK Mapping
 
-Relevant activity identified during the investigation will be mapped to the appropriate MITRE ATT&CK techniques.
+The detection is aligned with:
 
-Potential techniques will be determined based on the actual evidence discovered during the investigation rather than assumed in advance.
+**T1110.001 — Password Guessing**
 
+The technique was selected because the lab simulates repeated failed authentication attempts against a user account.
+
+The mapping demonstrates how authentication-based detections can be associated with relevant MITRE ATT&CK techniques during SOC analysis.
 ---
 
 ## Results
 
-*To be completed after the lab investigation.*
+The detection was successfully validated end-to-end.
+
+Results included:
+
+- Microsoft Entra ID authentication logs successfully ingested into Sentinel
+- KQL successfully identified repeated failed authentication activity
+- A custom Microsoft Sentinel Analytics Rule was created
+- The rule successfully triggered after simulated failed authentication attempts
+- A Sentinel security incident was generated
+- The affected user and source IP were successfully mapped as entities
+- The investigation graph correlated the entities with the alert
+- Authentication activity was reviewed to establish the investigation timeline
+- Investigation findings and response actions were documented
+- The incident was classified and closed after validation
 
 The final results will document:
 
@@ -216,9 +248,16 @@ The final results will document:
 
 ## Lessons Learned
 
-*To be completed after the lab.*
+This lab provided hands-on experience building an authentication threat detection workflow in Microsoft Sentinel.
 
-This section will summarize technical findings and practical lessons learned while configuring Sentinel, writing KQL queries, investigating authentication activity, and developing a detection workflow.
+Key lessons included:
+
+- Authentication logs provide valuable telemetry for detecting account-based threats.
+- KQL can be used to transform raw authentication events into actionable detections.
+- Entity mapping improves incident investigation by connecting alerts to users and IP addresses.
+- Detection rules should be validated with controlled test activity before being considered operational.
+- Reviewing the complete authentication timeline is important when determining whether failed authentication activity resulted in potential account compromise.
+- Effective SOC investigations require both technical evidence and clear documentation.
 
 ---
 
