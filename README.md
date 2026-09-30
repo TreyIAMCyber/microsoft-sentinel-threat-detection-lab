@@ -133,8 +133,12 @@ The `KQL/` directory contains queries developed during the investigation.
 
 ```kql
 SigninLogs
-| where ResultType != 0
-| summarize FailedAttempts=count() by UserPrincipalName, IPAddress
+| where ResultType == 50126
+| summarize
+    FailedAttempts = count(),
+    FirstAttempt = min(TimeGenerated),
+    LastAttempt = max(TimeGenerated)
+    by UserPrincipalName, IPAddress
 | where FailedAttempts >= 5
 | order by FailedAttempts desc
 ```
