@@ -37,7 +37,7 @@ SigninLogs
 | where FailedAttempts >= 5
 | order by FailedAttempts desc
 
-## Rule Configuration
+```## Rule Configuration
 
 | Setting | Configuration |
 |---|---|
