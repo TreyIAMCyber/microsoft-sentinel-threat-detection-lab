@@ -3,7 +3,7 @@
 // for the lab account.
 
 SigninLogs
-| where UserPrincipalName =~ "sentinellabuser"
+| where UserPrincipalName =~ "sentinellabuser@travaughnwatson2gmail.onmicrosoft.com"
 | project
     TimeGenerated,
     UserPrincipalName,
