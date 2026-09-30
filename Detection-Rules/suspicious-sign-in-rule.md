@@ -36,14 +36,3 @@ SigninLogs
     by UserPrincipalName, IPAddress
 | where FailedAttempts >= 5
 | order by FailedAttempts desc
-
-| Setting       | Configuration                   |
-| ------------- | ------------------------------- |
-| Rule Type     | Scheduled Analytics Rule        |
-| Severity      | Medium                          |
-| Frequency     | Every 5 minutes                 |
-| Lookup Period | Previous 10 minutes             |
-| Threshold     | 5 or more failed attempts       |
-| Data Source   | Microsoft Entra ID Sign-in Logs |
-| Table         | `SigninLogs`                    |
-
