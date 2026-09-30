@@ -1,0 +1,17 @@
+// Microsoft Sentinel - Suspicious Sign-In Investigation
+// Reviews failed and successful authentication activity
+// for the lab account.
+
+SigninLogs
+| where UserPrincipalName =~ "sentinellabuser"
+| project
+    TimeGenerated,
+    UserPrincipalName,
+    IPAddress,
+    Location,
+    AppDisplayName,
+    ResultType,
+    ResultDescription,
+    ConditionalAccessStatus,
+    AuthenticationRequirement
+| order by TimeGenerated asc
