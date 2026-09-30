@@ -1,0 +1,13 @@
+// Microsoft Sentinel - Failed Entra ID Sign-In Detection
+// Detects 5 or more failed authentication attempts
+// for the same user and source IP.
+
+SigninLogs
+| where ResultType == 50126
+| summarize
+    FailedAttempts = count(),
+    FirstAttempt = min(TimeGenerated),
+    LastAttempt = max(TimeGenerated)
+    by UserPrincipalName, IPAddress
+| where FailedAttempts >= 5
+| order by FailedAttempts desc
